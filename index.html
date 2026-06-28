@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="آزمایشگاه تعاملی مجموعه‌های ریاضی - ابزار آموزشی برای کار با مجموعه‌ها">
+    <meta name="keywords" content="مجموعه ریاضی, نمودار ون, اجتماع مجموعه, اشتراک مجموعه, ریاضی نهم">
+    <meta name="author" content="آزمایشگاه مجموعه‌ها">
+    <title>آزمایشگاه مجموعه‌ها - ابزار آموزشی ریاضی</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
+</head>
+<body>
+    <div id="loading" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>در حال بارگذاری آزمایشگاه مجموعه‌ها...</p>
+    </div>
+
+    <div class="container">
+        <header role="banner">
+            <div class="header-content">
+                <h1 id="main-title">🧮 آزمایشگاه مجموعه‌ها</h1>
+                <p class="subtitle">ابزار آموزشی تعاملی برای کار با مجموعه‌های ریاضی</p>
+                <div class="header-stats">
+                    <span class="stat-item"><strong id="sets-count">0</strong><small>مجموعه</small></span>
+                    <span class="stat-item"><strong id="elements-count">0</strong><small>عنصر</small></span>
+                    <span class="stat-item"><strong id="operations-count">0</strong><small>عملیات</small></span>
+                </div>
+            </div>
+        </header>
+
+        <main role="main">
+            <section id="controls" aria-labelledby="controls-heading">
+                <h2 id="controls-heading" class="sr-only">کنترل‌های اصلی برنامه</h2>
+                <div class="controls-grid">
+                    <button id="mainMenuBtn" class="btn btn-primary" aria-label="رفتن به منوی اصلی"><span class="btn-icon">🏠</span>منوی اصلی</button>
+                    <button id="startBtn" class="btn btn-primary" aria-label="شروع مجدد برنامه"><span class="btn-icon">🔄</span>شروع مجدد</button>
+                    <button id="addSetBtn" class="btn btn-success" aria-label="ایجاد مجموعه جدید"><span class="btn-icon">➕</span>مجموعه جدید</button>
+                    <button id="helpBtn" class="btn btn-info" aria-label="نمایش راهنمای برنامه"><span class="btn-icon">❓</span>راهنما</button>
+                </div>
+            </section>
+
+            <section id="step" aria-live="assertive" aria-atomic="true"></section>
+
+            <section id="quick-help" class="quick-help">
+                <details>
+                    <summary><span class="help-icon">📚</span>راهنمای سریع مجموعه‌ها</summary>
+                    <div class="help-content">
+                        <div class="help-section"><h4>💡 انواع مجموعه‌ها:</h4><div class="help-grid"><div class="help-item"><strong>مجموعه تهی:</strong> ∅ یا {}</div><div class="help-item"><strong>مجموعه متناهی:</strong> {1,2,3}</div><div class="help-item"><strong>مجموعه نامتناهی:</strong> ℕ, ℤ, ℝ</div><div class="help-item"><strong>زیرمجموعه:</strong> A ⊆ B</div></div></div>
+                        <div class="help-section"><h4>🔧 عملیات اصلی:</h4><div class="help-grid"><div class="help-item"><strong>اجتماع:</strong> A ∪ B</div><div class="help-item"><strong>اشتراک:</strong> A ∩ B</div><div class="help-item"><strong>تفاضل:</strong> A - B</div><div class="help-item"><strong>تفاضل متقارن:</strong> A Δ B</div></div></div>
+                        <div class="help-section"><h4>🎯 فرمت‌های ورودی:</h4><div class="help-grid"><div class="help-item"><strong>نمادین:</strong> {x | x ∈ ℕ, x ≤ 5}</div><div class="help-item"><strong>کلامی:</strong> اعداد فرد بین ۱ تا ۱۰</div><div class="help-item"><strong>مستقیم:</strong> 1,2,3,4,5</div></div></div>
+                    </div>
+                </details>
+            </section>
+
+            <section id="info-panel" class="info-panel">
+                <div class="info-items">
+                    <div class="info-item"><span class="info-label">مجموعه‌های فعال:</span><span class="info-value" id="active-sets-count">0</span></div>
+                    <div class="info-item"><span class="info-label">کل اعضا:</span><span class="info-value" id="total-elements-count">0</span></div>
+                    <div class="info-item"><span class="info-label">حالت:</span><span class="info-value" id="current-mode">آماده</span></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="keyboard" class="keyboard floating-keyboard" role="dialog" aria-label="کیبورد ریاضی" aria-modal="true" style="display: none;">
+        <div class="keyboard-header"><span class="keyboard-title">⌨️ کیبورد ریاضی هوشمند</span><button class="btn-close-kb" aria-label="بستن کیبورد"><span class="close-icon">✖</span></button></div>
+        <div class="keyboard-rows">
+            <div class="keyboard-row"><button class="btn-keyboard" data-symbol="1">1</button><button class="btn-keyboard" data-symbol="2">2</button><button class="btn-keyboard" data-symbol="3">3</button><button class="btn-keyboard" data-symbol="4">4</button><button class="btn-keyboard" data-symbol="5">5</button><button class="btn-keyboard" data-symbol="6">6</button><button class="btn-keyboard" data-symbol="7">7</button><button class="btn-keyboard" data-symbol="8">8</button><button class="btn-keyboard" data-symbol="9">9</button><button class="btn-keyboard" data-symbol="0">0</button></div>
+            <div class="keyboard-row"><button class="btn-keyboard" data-symbol="∪">∪</button><button class="btn-keyboard" data-symbol="∩">∩</button><button class="btn-keyboard" data-symbol="−">−</button><button class="btn-keyboard" data-symbol="Δ">Δ</button><button class="btn-keyboard" data-symbol="⊂">⊂</button><button class="btn-keyboard" data-symbol="⊆">⊆</button><button class="btn-keyboard" data-symbol="∈">∈</button><button class="btn-keyboard" data-symbol="∉">∉</button><button class="btn-keyboard" data-symbol="∅">∅</button></div>
+            <div class="keyboard-row"><button class="btn-keyboard" data-symbol="ℕ">ℕ</button><button class="btn-keyboard" data-symbol="𝕎">𝕎</button><button class="btn-keyboard" data-symbol="ℤ">ℤ</button><button class="btn-keyboard" data-symbol="ℚ">ℚ</button><button class="btn-keyboard" data-symbol="ℝ">ℝ</button><button class="btn-keyboard" data-symbol="ℚ′">ℚ′</button></div>
+            <div class="keyboard-row"><button class="btn-keyboard" data-symbol="√">√</button><button class="btn-keyboard" data-symbol="π">π</button><button class="btn-keyboard" data-symbol="∞">∞</button><button class="btn-keyboard" data-symbol="⁄">⁄</button><button class="btn-keyboard" data-symbol="|">|</button><button class="btn-keyboard" data-symbol=",">,</button><button class="btn-keyboard" data-symbol="-">-</button><button class="btn-keyboard" data-symbol=".">.</button></div>
+            <div class="keyboard-row"><button class="btn-keyboard" data-symbol="(">(</button><button class="btn-keyboard" data-symbol=")">)</button><button class="btn-keyboard" data-symbol="[">[</button><button class="btn-keyboard" data-symbol="]">]</button><button class="btn-keyboard" data-symbol="{">{</button><button class="btn-keyboard" data-symbol="}">}</button><button class="btn-keyboard" data-symbol="<"><</button><button class="btn-keyboard" data-symbol=">">></button></div>
+            <div class="keyboard-row"><button class="btn-keyboard" data-symbol="≤">≤</button><button class="btn-keyboard" data-symbol="≥">≥</button><button class="btn-keyboard space-btn" data-symbol=" "><span class="space-text">فاصله</span></button><button class="btn-keyboard backspace-btn" data-symbol="backspace"><span class="backspace-icon">⌫</span></button></div>
+        </div>
+        <div class="keyboard-footer"><div class="keyboard-tips"><span class="tip">💡 از کیبورد فیزیکی برای تایپ سریع‌تر استفاده کنید</span><span class="tip">🎯 برای بستن کیبورد از دکمه ESC استفاده کنید</span></div></div>
+    </div>
+
+    <button id="kbBtn" class="kb-toggle" aria-label="باز کردن کیبورد ریاضی"><span class="kb-icon">⌨️</span><span class="kb-tooltip">کیبورد ریاضی</span></button>
+    <button id="debugBtn" class="debug-toggle" aria-label="دیباگ برنامه" title="برای توسعه‌دهندگان"><span class="debug-icon">🐛</span></button>
+    <button id="scrollToTop" class="scroll-top-btn" aria-label="بازگشت به بالای صفحه"><span class="scroll-icon">↑</span></button>
+    <div id="systemMessages" class="system-messages" aria-live="polite" aria-atomic="true"></div>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section"><h4>آزمایشگاه مجموعه‌ها</h4><p>ابزار آموزشی پیشرفته برای یادگیری مفاهیم مجموعه‌های ریاضی</p></div>
+            <div class="footer-section"><h4>امکانات</h4><ul><li>ایجاد و مدیریت مجموعه‌ها</li><li>عملیات ریاضی پیشرفته</li><li>نمایش‌های گرافیکی</li><li>جستجوی هوشمند</li></ul></div>
+            <div class="footer-section"><h4>فرمت‌های پشتیبانی شده</h4><ul><li>ورودی نمادین: {x | x ∈ ℕ, x ≤ 5}</li><li>ورودی کلامی: اعداد فرد بین ۱ تا ۱۰</li><li>ورودی مستقیم: 1,2,3,4,5</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 آزمایشگاه مجموعه‌ها - ساخته شده با <span style="color: var(--danger-color);" aria-label="عشق">❤️</span> برای دانش‌آموزان | نسخه V.4.40</p></div>
+    </footer>
+
+    <noscript><div class="noscript-warning"><div class="noscript-content"><h2>⚠️ جاوااسکریپت غیرفعال است</h2><p>برای استفاده از آزمایشگاه مجموعه‌ها، لطفاً جاوااسکریپت مرورگر خود را فعال کنید.</p></div></div></noscript>
+
+    <script src="script.js"></script>
+</body>
+</html>
